@@ -21,12 +21,21 @@ namespace ExploreAdventure
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseExceptionHandler("/error.html");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseRouting();
+
+            app.Use(async (context, next) =>
+                {
+                if (context.Request.Path.Value.Contains("invalid"))
+                    throw new Exception("ERRor!");
+                await next();
+            });
 
             app.UseFileServer();
         }
