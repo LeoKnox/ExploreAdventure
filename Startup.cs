@@ -28,13 +28,7 @@ namespace ExploreAdventure
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("New Adventure!");
-                });
-            });
+            app.UseFileServer();
         }
     }
 }
